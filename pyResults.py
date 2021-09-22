@@ -1,15 +1,35 @@
 #!/usr/bin/env python3
 
+from io import BufferedReader
+from os import path
 import sys
 import argparse
 import pathlib
 import logging
+import re
 
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-def load_text_file(file_path: str):
+
+def get_file_type(file_path: pathlib.Path):
+    if not file_path.is_file():
+        logger.error(f'cannot open file {file_path}')
+        exit()
+
+    f = file_path.open(mode='r', encoding='utf8')
+    head = f.readline().rstrip()
+    f.close()
+    if head == '#!MLF!#':
+        return 'mlf'
+    elif re.match(r'\S+\s.*', head):
+        return 'txt'
+    else:
+        return None
+
+
+def load_txt_file(file_path: pathlib.Path):
     if not file_path.is_file():
         logger.error(f'cannot open file {file_path}')
         exit()
@@ -30,6 +50,33 @@ def load_text_file(file_path: str):
         d[name] = trans
     f.close()
     return d
+
+
+def load_mlf_file(file_path: pathlib.Path):
+    if not file_path.is_file():
+        logger.error(f'cannot open file {file_path}')
+        exit()
+    
+    f = file_path.open(mode='r', encoding='utf8')
+    d = {}
+    _ = f.readline()
+    for line in f:
+        m = re.match(r'"\*\/(\S+)\.lab"', line.rstrip())
+        if m:
+            name = m.group(1)
+            d[name] = []
+            while True:
+                c = f.readline().rstrip()
+                if c == '.': break
+                d[name].append(c)
+        else:
+            logger.error(f'{file_path}格式错误，请确保是mlf文件')
+            exit()
+
+    f.close()
+    return d
+
+
 
 def editDistance(r, h):
     '''
@@ -57,6 +104,7 @@ def editDistance(r, h):
                 delete = d[i-1][j] + 1
                 d[i][j] = min(substitute, insert, delete)
     return d
+
 
 def getStepList(r, h, d):
     '''
@@ -90,6 +138,7 @@ def getStepList(r, h, d):
             x = x - 1
             y = y
     return list[::-1]
+
 
 def alignedPrint(list, r, h):
     '''
@@ -276,7 +325,16 @@ if __name__ == '__main__':
     is_align = args.t
     is_full = args.t or args.f 
 
-    d_ref = load_text_file(ref)
-    d_hyp = load_text_file(hyp)
+    file_type = get_file_type(ref)
+
+    if file_type == 'txt':
+        d_ref = load_txt_file(ref)
+        d_hyp = load_txt_file(hyp)
+    elif file_type == 'mlf':
+        d_ref = load_mlf_file(ref)
+        d_hyp = load_mlf_file(hyp)
+    else:
+        logger.error(f'非法文件格式')
+        exit()
 
     wer(d_ref, d_hyp, is_align, is_full)
