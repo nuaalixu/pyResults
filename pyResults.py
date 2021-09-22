@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 import argparse
 import pathlib
@@ -15,7 +17,11 @@ def load_text_file(file_path: str):
     f = file_path.open(mode='r', encoding='utf8')
     d = {}
     for line in f:
-        name, trans = line.rstrip().split(' ', 1)
+        try:
+            name, trans = line.rstrip().split(' ', 1)
+        except ValueError:
+            logger.error(f'{file_path}格式错误，请检查文件空格')
+            exit()
         trans = list(trans)
         trans = [c.strip() for c in trans if c.strip() != '']
         if name in d:
