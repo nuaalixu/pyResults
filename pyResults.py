@@ -62,9 +62,6 @@ def load_txt_file(file_path: pathlib.Path):
             else:
                 d[name].append(c)
         if word != '': d[name].append(word)
-
-        if len(d[name]) < 1:
-            d[name] = ['NULL',]
             
     f.close()
     return d
