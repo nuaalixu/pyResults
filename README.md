@@ -32,7 +32,7 @@ text文件格式:
 ```
 
 ## 辅助工具
-utils目录下是辅助脚本，主要用于文本文件的格式转换。
-read_json_for_task.py，将录音文件转写的识别结果json文件转成标准txt文件。
-label2txt.sh，将原始标注文本文件转成标准txt文件。
-txt2mlf.py，将标准txt文件转mlf文件。
+utils目录下是辅助脚本，主要用于文本文件的格式转换。\n
+read_json_for_task.py，将录音文件转写的识别结果json文件转成标准txt文件。\n
+label2txt.sh，将原始标注文本文件转成标准txt文件。\n
+txt2mlf.py，将标准txt文件转mlf文件。\n
