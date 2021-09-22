@@ -38,16 +38,34 @@ def load_txt_file(file_path: pathlib.Path):
     d = {}
     for line in f:
         try:
-            name, trans = line.rstrip().split(' ', 1)
+            name, trans = line.rstrip().split(None, 1)
         except ValueError:
             logger.error(f'{file_path}格式错误，请检查文件空格')
             exit()
-        trans = list(trans)
-        trans = [c.strip() for c in trans if c.strip() != '']
         if name in d:
             logger.error(f'{name} is duplicated')
             exit()
-        d[name] = trans
+        else:
+            d[name] = []
+        
+        word = ''
+        for c in trans:
+            if re.match(r'[a-zA-Z0-9_]', c):
+                word += c
+            elif re.match(r'\s', c) and word != '':
+                d[name].append(word)
+                word = ''
+            elif word != '':
+                d[name].append(word)
+                word = ''
+                d[name].append(c)
+            else:
+                d[name].append(c)
+        if word != '': d[name].append(word)
+
+        if len(d[name]) < 1:
+            d[name] = ['NULL',]
+            
     f.close()
     return d
 
