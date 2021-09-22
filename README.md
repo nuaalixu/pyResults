@@ -18,7 +18,7 @@ python3 pyResults.py ref.txt hyp.txt
 python3 pyResults.py ref.txt hyp.txt
 ```
 
-## 要求输入文本格式
+## 输入文本格式
 支持kaldi的text文件和htk的mlf文件。
 
 text文件格式:
