@@ -5,17 +5,17 @@ A tool for calculation CER (Character Error Rate) in Python.
 
 查看帮助信息:
 ```python
-python3 pyResults -h
+python3 pyResults.py -h
 ```
 
 基础CER结果：
 ```
-python3 pyResults ref.txt hyp.txt
+python3 pyResults.py ref.txt hyp.txt
 ```
 
 详细信息:
 ```
-python3 pyResults ref.txt hyp.txt
+python3 pyResults.py ref.txt hyp.txt
 ```
 
 ## 要求输入文本格式
