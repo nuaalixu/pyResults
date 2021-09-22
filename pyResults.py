@@ -61,7 +61,7 @@ def load_mlf_file(file_path: pathlib.Path):
     d = {}
     _ = f.readline()
     for line in f:
-        m = re.match(r'"\*\/(\S+)\.lab"', line.rstrip())
+        m = re.match(r'"\*\/(\S+)\.[labrec]{3}"', line.rstrip())
         if m:
             name = m.group(1)
             d[name] = []
