@@ -1,5 +1,5 @@
 # pyResult
-A tool for calculation CER (Character Error Rate) in Python.
+A tool for calculation WER (Word Error Rate) in Python.
 
 ## 使用方法
 
@@ -10,12 +10,12 @@ python3 pyResults.py -h
 
 基础CER结果：
 ```
-python3 pyResults.py ref.txt hyp.txt
+python3 pyResults.py data/ref.txt data/hyp.txt
 ```
 
 详细信息:
 ```
-python3 pyResults.py ref.txt hyp.txt
+python3 pyResults.py data/ref.txt data/hyp.txt
 ```
 
 ## 输入文本格式
