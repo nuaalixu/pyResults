@@ -18,6 +18,13 @@ python3 pyResults.py data/ref.txt data/hyp.txt
 python3 pyResults.py data/ref.txt data/hyp.txt
 ```
 
+预期结果：
+```
+---------- Overall Results ----------
+%Corr=87.50, Acc=84.29, WER: 15.71(Sub=11.07, Del=1.43, Ins=3.21)
+```
+Corr是正确率，Acc是准确率，WER是词错率（中文是字错率），Sub、Del和Ins分别表示插入错误、删除错误和插入错误。
+
 ## 输入文本格式
 支持kaldi的text文件和htk的mlf文件。
 
