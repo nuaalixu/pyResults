@@ -295,22 +295,21 @@ def wer(d_ref, d_hyp, is_align=False, is_full=False):
         n_sub = step_list.count('s')
         n_del = step_list.count('d')
 
+        # print the result of each sentence in aligned way
+        if is_align:
+            print(f'Aligned transcription: {name}')
+            alignedPrint(step_list, d_ref[name], d_hyp[name])
+        
+        # print statistics of each sentence
         if is_full:
-            # print every result
-            print(f'Name: {name}')
             wer = float(ed[len(d_ref[name])][len(d_hyp[name])]) / len(d_ref[name]) * 100
             corr = 100 - (n_sub + n_del) / n * 100
             acc = 100 - wer
             e_ins = n_ins / n * 100
             e_sub = n_sub / n * 100
             e_del = n_del / n * 100
-
-            if is_align:
-                # print the result in aligned way
-                alignedPrint(step_list, d_ref[name], d_hyp[name])
-
-            print(f"%Corr={corr:.2f}, Acc={acc:.2f}, WER: {wer:.2f}(Sub={e_sub:.2f}, Del={e_del:.2f}, Ins={e_ins:.2f})")
-
+            print(f'{name}: % {corr:.2f} ({acc:.2f}) [Sub={e_sub:.2f}, Del={e_del:.2f}, Ins={e_ins:.2f}]')
+        
         total_count += n
         total_ins += n_ins
         total_sub += n_sub
@@ -322,8 +321,8 @@ def wer(d_ref, d_hyp, is_align=False, is_full=False):
     wer = (total_ins + total_sub + total_del ) / total_count * 100
     corr = 100 - (total_sub + total_del ) / total_count * 100
     acc = 100 - wer
-    print("---------- Overall Results ----------")
-    print(f"%Corr={corr:.2f}, Acc={acc:.2f}, WER: {wer:.2f}(Sub={e_sub:.2f}, Del={e_del:.2f}, Ins={e_ins:.2f})")
+    print("------------------------- Overall Results -------------------------")
+    print(f"%Corr={corr:.2f}, Acc={acc:.2f}, WER: {wer:.2f} [Sub={e_sub:.2f}, Del={e_del:.2f}, Ins={e_ins:.2f}]")
 
 
 if __name__ == '__main__':
@@ -339,7 +338,7 @@ if __name__ == '__main__':
     ref = args.ref
     hyp = args.hyp
     is_align = args.t
-    is_full = args.t or args.f 
+    is_full = args.f
 
     file_type = get_file_type(ref)
 
