@@ -8,14 +8,14 @@ A tool for calculation WER (Word Error Rate) in Python.
 python3 pyResults.py -h
 ```
 
-基础CER结果：
+统计信息总览：
 ```
 python3 pyResults.py data/ref.txt data/hyp.txt
 ```
 
-详细信息:
+详细统计信息:
 ```
-python3 pyResults.py data/ref.txt data/hyp.txt
+python3 pyResults.py -f data/ref.txt data/hyp.txt
 ```
 
 预期结果：
