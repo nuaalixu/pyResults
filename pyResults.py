@@ -48,6 +48,7 @@ def load_txt_file(file_path: pathlib.Path):
         else:
             d[name] = []
         
+        # doesn't split english word
         word = ''
         for c in trans:
             if re.match(r'[a-zA-Z0-9_]', c):
@@ -296,7 +297,7 @@ def wer(d_ref, d_hyp, is_align=False, is_full=False):
 
         if is_full:
             # print every result
-            print(f'SEN: {name}')
+            print(f'Name: {name}')
             wer = float(ed[len(d_ref[name])][len(d_hyp[name])]) / len(d_ref[name]) * 100
             corr = 100 - (n_sub + n_del) / n * 100
             acc = 100 - wer
@@ -326,7 +327,7 @@ def wer(d_ref, d_hyp, is_align=False, is_full=False):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='字错（CER）计算工具python版。问题反馈请联系xu.li@aispeech.com')
+    parser = argparse.ArgumentParser(description='词错率（WER）计算工具python版。问题反馈请联系xu.li@aispeech.com')
     parser.add_argument('ref', type=pathlib.Path, help='人工标注文件路径')
     parser.add_argument('hyp', type=pathlib.Path, help='识别结果文件路径')
 
