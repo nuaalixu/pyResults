@@ -53,7 +53,7 @@ def load_txt_file(file_path: pathlib.Path):
         for c in trans:
             if re.match(r'[a-zA-Z0-9_]', c):
                 word += c
-            elif re.match(r'\s', c):
+            elif re.match(r'[ ，。？！]', c):
                 if word != '': d[name].append(word)
                 word = ''
             elif word != '':
