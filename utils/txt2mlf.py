@@ -28,12 +28,15 @@ def convert(f):
                 if is_english_char(c):
                     en_word = en_word + c
                     continue
-                if is_chinese_char(c):
-                    if len(en_word)>0:
+                elif is_chinese_char(c):
+                    if en_word:
                         print(en_word)
                         en_word=''
                     print(c)
-            if len(en_word) > 0: print(en_word)
+                elif c == ' ' and en_word:
+                    print(en_word)
+                    en_word=''
+            if en_word: print(en_word)
         print('.')
 
 
