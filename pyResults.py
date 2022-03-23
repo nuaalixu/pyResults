@@ -277,8 +277,9 @@ def wer(d_ref, d_hyp, is_align=False, is_full=False):
     total_sub = 0
     total_ins = 0
     total_del = 0
+    correct_sent = 0
 
-    for i, name in enumerate(d_hyp):
+    for index, name in enumerate(d_hyp, 1):
         if not name in d_ref:
             logger.error(f'cannot find {name} in {ref}')
             exit()
@@ -294,6 +295,9 @@ def wer(d_ref, d_hyp, is_align=False, is_full=False):
         n_ins = step_list.count('i')
         n_sub = step_list.count('s')
         n_del = step_list.count('d')
+
+        if not ed[len(d_ref[name])][len(d_hyp[name])]:
+            correct_sent += 1
 
         # print the result of each sentence in aligned way
         if is_align:
@@ -315,6 +319,9 @@ def wer(d_ref, d_hyp, is_align=False, is_full=False):
         total_sub += n_sub
         total_del += n_del
 
+    total_sent = index
+    s_corr = correct_sent / total_sent * 100
+
     e_ins = total_ins / total_count * 100
     e_sub = total_sub / total_count * 100
     e_del = total_del / total_count * 100
@@ -322,7 +329,8 @@ def wer(d_ref, d_hyp, is_align=False, is_full=False):
     corr = 100 - (total_sub + total_del ) / total_count * 100
     acc = 100 - wer
     print("------------------------- Overall Results -------------------------")
-    print(f"%Corr={corr:.2f}, Acc={acc:.2f}, WER: {wer:.2f} [Sub={e_sub:.2f}, Del={e_del:.2f}, Ins={e_ins:.2f}]")
+    print(f"SENT: %Correct={s_corr:.2f} [H={correct_sent}, S={total_sent - correct_sent}, N={total_sent}]")
+    print(f"WORD: %Corr={corr:.2f}, Acc={acc:.2f}, WER: {wer:.2f} [Sub={e_sub:.2f}, Del={e_del:.2f}, Ins={e_ins:.2f}]")
 
 
 if __name__ == '__main__':
