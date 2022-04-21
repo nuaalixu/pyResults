@@ -34,7 +34,7 @@ C02E211102064_V1-3-4_202105040915_AD_NEAR-049: % 100.00 (100.00) [Sub=0.00, Del=
 SENT: %Correct=30.00 [H=9, S=21, N=30]
 WORD: %Corr=87.50, Acc=84.29, WER: 15.71 [Sub=11.07, Del=1.43, Ins=3.21]
 ```
-SENT: Correct是句级别准确率。
+SENT: Correct是句级别准确率。  
 WORD: Corr是正确率，Acc是准确率，WER是词错率（中文是字错率），Sub、Del和Ins分别表示替换错误、删除错误和插入错误。
 
 ### 每句对齐显示
@@ -43,10 +43,14 @@ python3 pyResults.py -t data/ref.txt data/hyp.txt
 ```
 预期结果
 ```
+Aligned transcription: C02E211102064_V1-3-4_202105040915_AD_NEAR-002
+REF:	中	配	差	多	少	钱	呢	
+HYP:	中	惠	差	多	 	钱	嘞	
+EVA:	 	S	 	 	D	 	S	
 Aligned transcription: C02E211102064_V1-3-4_202105040915_AD_NEAR-004
-REF: 中 配 差 多 少 钱 呢 
-HYP: 违 背 差 多   车 嘞 
-EVA: S S     D S S 
+REF:	中	配	差	多	少	钱	呢	
+HYP:	违	背	差	多	 	车	嘞	
+EVA:	S	S	 	 	D	S	S	
 ------------------------- Overall Results -------------------------
 SENT: %Correct=30.00 [H=9, S=21, N=30]
 WORD: %Corr=87.50, Acc=84.29, WER: 15.71 [Sub=11.07, Del=1.43, Ins=3.21]
