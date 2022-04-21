@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 
-from io import BufferedReader
-from os import path
-import sys
 import argparse
 import pathlib
 import logging
