@@ -33,7 +33,7 @@ def convert(f):
                         print(en_word)
                         en_word=''
                     print(c)
-                elif c == ' ' and en_word:
+                elif (c == ' ' or c == '.' or c == ',') and en_word:
                     print(en_word)
                     en_word=''
             if en_word: print(en_word)
