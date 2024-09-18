@@ -296,20 +296,23 @@ def wer(d_ref, d_hyp, is_align=False, is_full=False):
         if not ed[len(d_ref[name])][len(d_hyp[name])]:
             correct_sent += 1
 
-        # print the result of each sentence in aligned way
+        # print the result of each wrong sentence in aligned way
         if is_align:
-            print(f'Aligned transcription: {name}')
-            alignedPrint(step_list, d_ref[name], d_hyp[name])
+            wer = float(ed[len(d_ref[name])][len(d_hyp[name])]) / len(d_ref[name]) * 100
+            if wer > 0:
+                print(f'Aligned transcription: {name}')
+                alignedPrint(step_list, d_ref[name], d_hyp[name])
         
-        # print statistics of each sentence
+        # print statistics of each wrong sentence
         if is_full:
             wer = float(ed[len(d_ref[name])][len(d_hyp[name])]) / len(d_ref[name]) * 100
-            corr = 100 - (n_sub + n_del) / n * 100
-            acc = 100 - wer
-            e_ins = n_ins / n * 100
-            e_sub = n_sub / n * 100
-            e_del = n_del / n * 100
-            print(f'{name}: % {corr:.2f} ({acc:.2f}) [Sub={e_sub:.2f}, Del={e_del:.2f}, Ins={e_ins:.2f}]')
+            if wer > 0:
+                corr = 100 - (n_sub + n_del) / n * 100
+                acc = 100 - wer
+                e_ins = n_ins / n * 100
+                e_sub = n_sub / n * 100
+                e_del = n_del / n * 100
+                print(f'{name}: % {corr:.2f} ({acc:.2f}) [Sub={e_sub:.2f}, Del={e_del:.2f}, Ins={e_ins:.2f}]')
         
         total_count += n
         total_ins += n_ins
